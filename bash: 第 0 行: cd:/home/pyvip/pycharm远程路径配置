@@ -1,0 +1,2 @@
+问题：无法从远程虚拟机下载文件：
+解决：configuration配置中，mapping配置deployment url填入项目根目录
