@@ -1,0 +1,21 @@
+报错类型：bash: 第 0 行: cd: /home/pyvip/study/dj34: 没有那个文件或目录
+/home/pyvip/.virtualenvs/dj34/bin/python3.6: can't open file '/home/pyvip/study/dj34/manage.py': [Errno 2] No such file or directory
+
+远程Ubuntu+diango+git操作过程的错误
+
+已排除因 执行命令所在路径不对 引起的错误
+
+git创建的仓库名不要和Django项目名一致：
+原因：
+Ubuntu从GitHub克隆仓库时,默认会创建一个以仓库名命名的文件————之所以克隆git仓库，是为了在其中创建项目以方便管理
+Django命令创建项目时，默认会递归创建两个同名文件夹。如果在项目外再套一层同名的git仓库，则一共有三个同名的文件夹
+该情况下，用pycharm远程Ubuntu，设置路径映射，下载文件，同步文件都没问题，但是一旦执行文件，运行项目，会报错：
+解释器无法找到对应的manage.py 文件，观察报错语句发现是解释器定位manage.py 的路径少了出错，路径中少了一个文件
+猜测：是pycharm解析路径的时候无法识别多个同名文件夹。此外不仅是项目目录文件，其它同名目录嵌套，pycharm远程无法识别的情况也遇到过。但是还没进行更多验证
+解决：修改目录名，在pycharm中创建新的项目，配置路径。
+
+为什么是重新创建目录：试过多次修改目录名，也修改了pycharm中的相关路径配置，但是运行后仍是在报之前的错误。
+而报错的信息与Ubuntu实际信息不符合（修改后，Ubuntu理论上，逻辑上不会出现这种错误）
+pycharm像滞留徘徊在之前的错误循环中，出不来
+猜测：pycharm在某个空间缓存了之前配置的信息，虽然修改了pycharm的配置，但是对已经缓存起来的数据无效。
+就像Django数据库中的迁移，分makemigrations和migrate两个步骤。有时候迁移没有完成，即makemigrations成功了，但是migrate阶段报错，报错如果没有解决，可能会被滞留在这个步骤，对下一次迁移产生影响
